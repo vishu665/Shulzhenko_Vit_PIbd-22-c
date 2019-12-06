@@ -8,14 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsSeaplane;
-using static WindowsFormsSeaplane.SeaPlane;
 
 namespace WindowsFormsSeaPlane
 {
     public partial class FormPlane : Form
-    {
-        private SeaPlane plane;
-
+    {       
+        private ITransport plane;
         public FormPlane()
         {
             InitializeComponent();
@@ -32,8 +30,7 @@ namespace WindowsFormsSeaPlane
         private void buttonCreate_Click(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            plane = new SeaPlane(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue,
-           Color.Yellow, true, true);
+            plane = new Plane(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue);
             plane.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxPlanes.Width,
            pictureBoxPlanes.Height);
             Draw();
@@ -57,6 +54,17 @@ namespace WindowsFormsSeaPlane
                     break;
             }
             Draw();
-        }       
+        }
+
+        private void buttonSeaPLane_Create_Click(object sender, EventArgs e)
+        {
+            {
+                Random rnd = new Random();
+                plane = new SeaPlane(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue, Color.Yellow, true, true);
+                plane.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxPlanes.Width,
+               pictureBoxPlanes.Height);
+                Draw();
+            }
+        }
     }
 }

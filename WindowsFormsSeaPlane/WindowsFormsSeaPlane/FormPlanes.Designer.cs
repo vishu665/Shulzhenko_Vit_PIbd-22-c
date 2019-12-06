@@ -20,11 +20,12 @@
         private void InitializeComponent()
         {
             this.pictureBoxPlanes = new System.Windows.Forms.PictureBox();
-            this.buttonCreate = new System.Windows.Forms.Button();
+            this.buttonCreatePlane = new System.Windows.Forms.Button();
             this.buttonDown = new System.Windows.Forms.Button();
             this.buttonRight = new System.Windows.Forms.Button();
             this.buttonLeft = new System.Windows.Forms.Button();
             this.buttonUp = new System.Windows.Forms.Button();
+            this.buttonSeaPLane_Create = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlanes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -36,15 +37,15 @@
             this.pictureBoxPlanes.TabIndex = 10;
             this.pictureBoxPlanes.TabStop = false;
             // 
-            // buttonCreate
+            // buttonCreatePlane
             // 
-            this.buttonCreate.Location = new System.Drawing.Point(12, 12);
-            this.buttonCreate.Name = "buttonCreate";
-            this.buttonCreate.Size = new System.Drawing.Size(75, 23);
-            this.buttonCreate.TabIndex = 11;
-            this.buttonCreate.Text = "Создать";
-            this.buttonCreate.UseVisualStyleBackColor = true;
-            this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
+            this.buttonCreatePlane.Location = new System.Drawing.Point(12, 12);
+            this.buttonCreatePlane.Name = "buttonCreatePlane";
+            this.buttonCreatePlane.Size = new System.Drawing.Size(179, 23);
+            this.buttonCreatePlane.TabIndex = 11;
+            this.buttonCreatePlane.Text = "Создать cамолёт";
+            this.buttonCreatePlane.UseVisualStyleBackColor = true;
+            this.buttonCreatePlane.Click += new System.EventHandler(this.buttonCreate_Click);
             // 
             // buttonDown
             // 
@@ -94,16 +95,27 @@
             this.buttonUp.UseVisualStyleBackColor = true;
             this.buttonUp.Click += new System.EventHandler(this.buttonMove_Click);
             // 
+            // buttonSeaPLane_Create
+            // 
+            this.buttonSeaPLane_Create.Location = new System.Drawing.Point(232, 12);
+            this.buttonSeaPLane_Create.Name = "buttonSeaPLane_Create";
+            this.buttonSeaPLane_Create.Size = new System.Drawing.Size(183, 23);
+            this.buttonSeaPLane_Create.TabIndex = 16;
+            this.buttonSeaPLane_Create.Text = "Создать гидросамолёт";
+            this.buttonSeaPLane_Create.UseVisualStyleBackColor = true;
+            this.buttonSeaPLane_Create.Click += new System.EventHandler(this.buttonSeaPLane_Create_Click);
+            // 
             // FormPlane
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonSeaPLane_Create);
             this.Controls.Add(this.buttonDown);
             this.Controls.Add(this.buttonRight);
             this.Controls.Add(this.buttonLeft);
             this.Controls.Add(this.buttonUp);
-            this.Controls.Add(this.buttonCreate);
+            this.Controls.Add(this.buttonCreatePlane);
             this.Controls.Add(this.pictureBoxPlanes);
             this.Name = "FormPlane";
             this.Text = "Гидросамолёт";
@@ -114,11 +126,12 @@
 
         #endregion
         private System.Windows.Forms.PictureBox pictureBoxPlanes;
-        private System.Windows.Forms.Button buttonCreate;
+        private System.Windows.Forms.Button buttonCreatePlane;
         private System.Windows.Forms.Button buttonDown;
         private System.Windows.Forms.Button buttonRight;
         private System.Windows.Forms.Button buttonLeft;
         private System.Windows.Forms.Button buttonUp;
+        private System.Windows.Forms.Button buttonSeaPLane_Create;
     }
 }
 
