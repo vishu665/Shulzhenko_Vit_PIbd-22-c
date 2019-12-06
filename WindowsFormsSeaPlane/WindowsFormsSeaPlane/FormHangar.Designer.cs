@@ -36,6 +36,7 @@
             this.maskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBoxTakePlane = new System.Windows.Forms.PictureBox();
+            this.listBoxLevels = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHangar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTakePlane)).BeginInit();
             this.SuspendLayout();
@@ -44,13 +45,13 @@
             // 
             this.pictureBoxHangar.Location = new System.Drawing.Point(3, 3);
             this.pictureBoxHangar.Name = "pictureBoxHangar";
-            this.pictureBoxHangar.Size = new System.Drawing.Size(625, 445);
+            this.pictureBoxHangar.Size = new System.Drawing.Size(646, 445);
             this.pictureBoxHangar.TabIndex = 0;
             this.pictureBoxHangar.TabStop = false;
             // 
             // buttonSetPlane
             // 
-            this.buttonSetPlane.Location = new System.Drawing.Point(676, 12);
+            this.buttonSetPlane.Location = new System.Drawing.Point(680, 122);
             this.buttonSetPlane.Name = "buttonSetPlane";
             this.buttonSetPlane.Size = new System.Drawing.Size(100, 44);
             this.buttonSetPlane.TabIndex = 1;
@@ -60,7 +61,7 @@
             // 
             // buttonSetSeaPlane
             // 
-            this.buttonSetSeaPlane.Location = new System.Drawing.Point(676, 62);
+            this.buttonSetSeaPlane.Location = new System.Drawing.Point(680, 172);
             this.buttonSetSeaPlane.Name = "buttonSetSeaPlane";
             this.buttonSetSeaPlane.Size = new System.Drawing.Size(100, 42);
             this.buttonSetSeaPlane.TabIndex = 2;
@@ -110,11 +111,21 @@
             this.pictureBoxTakePlane.TabIndex = 13;
             this.pictureBoxTakePlane.TabStop = false;
             // 
+            // listBoxLevels
+            // 
+            this.listBoxLevels.FormattingEnabled = true;
+            this.listBoxLevels.Location = new System.Drawing.Point(681, 21);
+            this.listBoxLevels.Name = "listBoxLevels";
+            this.listBoxLevels.Size = new System.Drawing.Size(95, 95);
+            this.listBoxLevels.TabIndex = 14;
+            this.listBoxLevels.SelectedIndexChanged += new System.EventHandler(this.ListBoxLevels_SelectedIndexChanged);
+            // 
             // FormHangar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.listBoxLevels);
             this.Controls.Add(this.pictureBoxTakePlane);
             this.Controls.Add(this.buttonTakePlane);
             this.Controls.Add(this.label2);
@@ -142,5 +153,6 @@
         private System.Windows.Forms.MaskedTextBox maskedTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBoxTakePlane;
+        private System.Windows.Forms.ListBox listBoxLevels;
     }
 }

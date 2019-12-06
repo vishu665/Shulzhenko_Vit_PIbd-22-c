@@ -41,10 +41,8 @@ namespace WindowsFormsSeaplane
                 Brush br1 = new SolidBrush(DopColor);
                 g.FillRectangle(br1, _startPosX + 65, _startPosY + 45, 25, 10);
                 g.FillRectangle(br1, _startPosX + 25, _startPosY + 45, 25, 10);
-
                 g.DrawLine(pen, _startPosX + 75, _startPosY + 45, _startPosX + 65, _startPosY + 30);
                 g.DrawLine(pen, _startPosX + 35, _startPosY + 45, _startPosX + 45, _startPosY + 30);
-
             }
             
             if (Backwings)
@@ -53,7 +51,6 @@ namespace WindowsFormsSeaplane
                 g.FillRectangle(wings, _startPosX - 10, _startPosY - 10, 15, 15);
                 g.DrawLine(pen, _startPosX, _startPosY, _startPosX + 10, _startPosY + 10);
                 g.DrawLine(pen, _startPosX - 8, _startPosY, _startPosX, _startPosY + 10);
-
             }
             base.DrawPlane(g);
         }

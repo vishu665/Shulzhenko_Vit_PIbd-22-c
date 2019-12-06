@@ -61,7 +61,6 @@ namespace WindowsFormsSeaPlane
             g.FillRectangle(br, _startPosX + 40, _startPosY - 15, 17, 16);
             g.FillRectangle(br, _startPosX + 70, _startPosY + 5, 13, 15);
             g.FillRectangle(br, _startPosX - 10, _startPosY + 7, 10, 15);
-
         }
     }
 }
