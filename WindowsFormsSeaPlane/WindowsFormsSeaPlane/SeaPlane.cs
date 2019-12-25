@@ -10,8 +10,8 @@ namespace WindowsFormsSeaplane
 {
     public class SeaPlane : Plane
     {
-        public Color DopColor { private set; get; }        
-        public bool LowerThelegs { private set; get; }        
+        public Color DopColor { private set; get; }
+        public bool LowerThelegs { private set; get; }
         public bool Backwings { private set; get; }
 
         public SeaPlane(int maxSpeed, float weight, Color mainColor, Color dopColor, bool lowerthelegs, bool wings) : base(maxSpeed, weight, mainColor)
@@ -44,7 +44,7 @@ namespace WindowsFormsSeaplane
                 g.DrawLine(pen, _startPosX + 75, _startPosY + 45, _startPosX + 65, _startPosY + 30);
                 g.DrawLine(pen, _startPosX + 35, _startPosY + 45, _startPosX + 45, _startPosY + 30);
             }
-            
+
             if (Backwings)
             {
                 Brush wings = new SolidBrush(DopColor);
@@ -53,6 +53,10 @@ namespace WindowsFormsSeaplane
                 g.DrawLine(pen, _startPosX - 8, _startPosY, _startPosX, _startPosY + 10);
             }
             base.DrawPlane(g);
+        }
+        public void SetDopColor(Color color)
+        {
+            DopColor = color;
         }
     }
 }

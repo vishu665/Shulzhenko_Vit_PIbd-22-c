@@ -13,6 +13,7 @@ namespace WindowsFormsSeaPlane
 {
     public partial class FormHangar : Form
     {
+        FormPlaneConfig form;
         private const int countLevel = 5;
         MultiLevelHangar parking;
 
@@ -41,22 +42,15 @@ namespace WindowsFormsSeaPlane
 
         private void ButtonSetPlane_Click(object sender, EventArgs e)
         {
-            if (listBoxLevels.SelectedIndex > -1)
-            {
-                ColorDialog dialog = new ColorDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    var plane = new Plane(100, 1000, dialog.Color);
-                    int place = parking[listBoxLevels.SelectedIndex] + plane;
-                    if (place == -1)
-                    {
-                        MessageBox.Show("Нет свободных мест", "Ошибка",
-                       MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    Draw();
-                }
-            }
+            form = new FormPlaneConfig();
+            form.AddEvent(AddPlane);
+            form.Show();
         }
+        private void AddPlane(ITransport plane)
+        {
+            if (plane != null && listBoxLevels.SelectedIndex > -1) { int place = parking[listBoxLevels.SelectedIndex] + plane; if (place > -1) { Draw(); } else { MessageBox.Show("Машину не удалось поставить"); } }
+        }
+
 
         private void ButtonSetSeaPlane_Click(object sender, EventArgs e)
         {

@@ -54,6 +54,12 @@
     <Compile Include="FormHangar.Designer.cs">
       <DependentUpon>FormHangar.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPlaneConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPlaneConfig.Designer.cs">
+      <DependentUpon>FormPlaneConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPlanes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +75,9 @@
     <Compile Include="SeaPlane.cs" />
     <EmbeddedResource Include="FormHangar.resx">
       <DependentUpon>FormHangar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPlaneConfig.resx">
+      <DependentUpon>FormPlaneConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPlanes.resx">
       <DependentUpon>FormPlanes.cs</DependentUpon>
