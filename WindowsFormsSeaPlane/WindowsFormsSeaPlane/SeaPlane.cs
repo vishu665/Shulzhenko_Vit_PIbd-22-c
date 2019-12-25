@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using WindowsFormsSeaPlane;
 
 namespace WindowsFormsSeaplane
 {
@@ -22,13 +23,7 @@ namespace WindowsFormsSeaplane
         public bool LowerThelegs { private set; get; }
         public bool Backwings { private set; get; }
 
-        public enum Direction
-        {
-            Up,
-            Down,
-            Left,
-            Right
-        }
+       
 
         public SeaPlane(int maxSpeed, float weight, Color mainColor, Color dopColor, bool lowerthelegs, bool wings)
         {
