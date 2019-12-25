@@ -21,8 +21,7 @@ namespace WindowsFormsSeaPlane
             this.pictureHeight = pictureHeight;
             for (int i = 0; i < countStages; ++i)
             {
-                hangarStages.Add(new Hangar<ITransport>(countPlaces, pictureWidth,
-               pictureHeight));
+                hangarStages.Add(new Hangar<ITransport>(countPlaces, pictureWidth, pictureHeight));
             }
         }
         public Hangar<ITransport> this[int ind]
@@ -111,6 +110,11 @@ namespace WindowsFormsSeaPlane
                 for (int i = 1; i < strs.Length; ++i)
                 {
                     if (strs[i] == "Level")
+                    line = fs.ReadLine();
+                    if (line == null)
+                        break;
+                    if (line == "Level")
+
                     {
                         counter++;
                         hangarStages.Add(new Hangar<ITransport>(countPlaces,
@@ -133,4 +137,3 @@ namespace WindowsFormsSeaPlane
                 }         
         }
     }
-}
