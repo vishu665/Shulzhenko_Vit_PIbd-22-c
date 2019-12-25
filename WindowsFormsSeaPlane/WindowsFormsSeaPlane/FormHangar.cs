@@ -27,7 +27,7 @@ namespace WindowsFormsSeaPlane
                 listBoxLevels.Items.Add("Уровень " + (i + 1));
             }
             listBoxLevels.SelectedIndex = 0;
-        }
+        }      
         private void Draw()
         {
             if (listBoxLevels.SelectedIndex > -1)
@@ -39,7 +39,6 @@ namespace WindowsFormsSeaPlane
                 pictureBoxHangar.Image = bmp;
             }
         }
-
         private void ButtonSetPlane_Click(object sender, EventArgs e)
         {
             form = new FormPlaneConfig();
@@ -60,13 +59,10 @@ namespace WindowsFormsSeaPlane
                 }
             }
         }
-
-
         private void ButtonSetSeaPlane_Click(object sender, EventArgs e)
         {
             if (listBoxLevels.SelectedIndex > -1)
             {
-
                 ColorDialog dialog = new ColorDialog();
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
@@ -83,7 +79,6 @@ namespace WindowsFormsSeaPlane
                         Draw();
                     }
                 }
-
             }
         }
         private void ButtonTakePlane_Click(object sender, EventArgs e)
