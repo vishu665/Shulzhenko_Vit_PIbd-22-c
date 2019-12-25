@@ -11,13 +11,24 @@ namespace WindowsFormsSeaPlane
     {
         protected const int carWidth = 100;
         protected const int carHeight = 60;
-
         public Plane(int maxSpeed, float weight, Color mainColor)
         {
             MaxSpeed = maxSpeed;
             Weight = weight;
             MainColor = mainColor;
         }
+
+        public Plane(string info)
+        {
+            string[] strs = info.Split(';');
+            if (strs.Length == 3)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                MainColor = Color.FromName(strs[2]);
+            }
+        }
+
         public override void MoveTransport(Direction direction)
         {
             float step = MaxSpeed * 100 / Weight;
@@ -61,6 +72,10 @@ namespace WindowsFormsSeaPlane
             g.FillRectangle(br, _startPosX + 40, _startPosY - 15, 17, 16);
             g.FillRectangle(br, _startPosX + 70, _startPosY + 5, 13, 15);
             g.FillRectangle(br, _startPosX - 10, _startPosY + 7, 10, 15);
+        }
+        public override string ToString()
+        {
+            return MaxSpeed + ";" + Weight + ";" + MainColor.Name;
         }
     }
 }

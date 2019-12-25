@@ -9,7 +9,7 @@ using WindowsFormsSeaPlane;
 namespace WindowsFormsSeaplane
 {
     public class SeaPlane : Plane
-    {
+    { 
         public Color DopColor { private set; get; }
         public bool LowerThelegs { private set; get; }
         public bool Backwings { private set; get; }
@@ -22,6 +22,20 @@ namespace WindowsFormsSeaplane
             DopColor = dopColor;
             LowerThelegs = lowerthelegs;
             Backwings = wings;
+        }
+
+        public SeaPlane(string info) : base(info)
+        {
+            string[] strs = info.Split(';');
+            if (strs.Length == 6)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                MainColor = Color.FromName(strs[2]);
+                DopColor = Color.FromName(strs[3]);
+                LowerThelegs = Convert.ToBoolean(strs[4]);
+                Backwings = Convert.ToBoolean(strs[5]);
+            }
         }
 
         public override void DrawPlane(Graphics g)
@@ -54,10 +68,15 @@ namespace WindowsFormsSeaplane
             }
             base.DrawPlane(g);
         }
+
         public void SetDopColor(Color color)
         {
             DopColor = color;
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + ";" + DopColor.Name + ";" + LowerThelegs + ";" + Backwings;
+        }
     }
 }
-
