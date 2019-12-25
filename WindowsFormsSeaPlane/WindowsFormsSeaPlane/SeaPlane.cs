@@ -13,7 +13,6 @@ namespace WindowsFormsSeaplane
         public Color DopColor { private set; get; }        
         public bool LowerThelegs { private set; get; }        
         public bool Backwings { private set; get; }
-
         public SeaPlane(int maxSpeed, float weight, Color mainColor, Color dopColor, bool lowerthelegs, bool wings) : base(maxSpeed, weight, mainColor)
         {
             MaxSpeed = maxSpeed;
@@ -59,4 +58,3 @@ namespace WindowsFormsSeaplane
         }
     }
 }
-
