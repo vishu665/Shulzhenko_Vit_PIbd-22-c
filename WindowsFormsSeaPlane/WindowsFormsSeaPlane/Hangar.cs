@@ -29,7 +29,7 @@ namespace WindowsFormsSeaPlane
         {
             if (p._places.Count == p._maxCount)
             {
-                return -1;
+                throw new HangarOverflowException();
             }
             for (int i = 0; i < p._maxCount; i++)
             {
@@ -53,7 +53,7 @@ namespace WindowsFormsSeaPlane
                 p._places.Remove(index);
                 return plane;
             }
-            return null;
+            throw new HangarNotFoundException(index);
         }
 
         private bool CheckFreePlace(int index)
@@ -79,8 +79,7 @@ namespace WindowsFormsSeaPlane
             {
                 for (int j = 0; j < 6; ++j)
                 {
-                    g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight,
-                    i * _placeSizeWidth + 110, j * _placeSizeHeight);
+                    g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight, i * _placeSizeWidth + 110, j * _placeSizeHeight);
                 }
                 g.DrawLine(pen, i * _placeSizeWidth, 0, i * _placeSizeWidth, 400);
             }
@@ -93,7 +92,7 @@ namespace WindowsFormsSeaPlane
                 {
                     return _places[ind];
                 }
-                return null;
+                throw new HangarNotFoundException(ind);
             }
             set
             {
@@ -102,6 +101,10 @@ namespace WindowsFormsSeaPlane
                     _places.Add(ind, value);
                     _places[ind].SetPosition(5 + ind / 5 * _placeSizeWidth + 5, ind % 5
                     * _placeSizeHeight + 15, PictureWidth, PictureHeight);
+                }
+                else
+                {
+                    throw new HangarOccupiedPlaceException(ind);
                 }
             }
         }

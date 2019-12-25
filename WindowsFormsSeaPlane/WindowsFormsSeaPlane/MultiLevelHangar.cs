@@ -36,38 +36,37 @@ namespace WindowsFormsSeaPlane
                 return null;
             }
         }
-        public bool SaveData(string filename)
+        public void SaveData(string filename)
         {
             if (File.Exists(filename))
             {
                 File.Delete(filename);
             }
-            using (StreamWriter fs = new StreamWriter(filename, false, System.Text.Encoding.Default))
+            using (FileStream fs = new FileStream(filename, FileMode.Create))
             {
-                fs.WriteLine("CountLeveles:" + hangarStages.Count);
+                WriteToFile("CountLeveles:" + hangarStages.Count + Environment.NewLine, fs);
                 foreach (var level in hangarStages)
                 {
-                    fs.WriteLine("Level");
+                    WriteToFile("Level" + Environment.NewLine, fs);
                     for (int i = 0; i < countPlaces; i++)
                     {
-                        var plane = level[i];
-                        if (plane != null)
+                        try
                         {
-
+                            var plane = level[i];
                             if (plane.GetType().Name == "Plane")
                             {
-                                fs.Write(i + ":Plane:");
+                                WriteToFile(i + ":Plane:", fs);
                             }
                             if (plane.GetType().Name == "SeaPlane")
                             {
-                                fs.Write(i + ":SeaPlane:");
+                                WriteToFile(i + ":SeaPlane:", fs);
                             }
-                            fs.WriteLine(plane);
+                            WriteToFile(plane + Environment.NewLine, fs);
                         }
+                        finally { };
                     }
                 }
             }
-            return true;
         }
 
         private void WriteToFile(string text, FileStream stream)
@@ -76,62 +75,62 @@ namespace WindowsFormsSeaPlane
             stream.Write(info, 0, info.Length);
         }
   
-        public bool LoadData(string filename)
+        public void LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
-                return false;
+                throw new FileNotFoundException();
             }
-
-            using (StreamReader fs = new StreamReader(filename, System.Text.Encoding.Default))
-            {
-                int counter = -1;
-                ITransport transport = null;
-                string line;
-                line = fs.ReadLine();
-                if (line.Contains("CountLeveles"))
+                string bufferTextFromFile = "";
+                using (FileStream fs = new FileStream(filename, FileMode.Open))
                 {
-                    int count = Convert.ToInt32(line.Split(':')[1]);
+                    byte[] b = new byte[fs.Length];
+                    UTF8Encoding temp = new UTF8Encoding(true);
+                    while (fs.Read(b, 0, b.Length) > 0)            
+                {
+                        bufferTextFromFile += temp.GetString(b);
+                    }
+                }
+                bufferTextFromFile = bufferTextFromFile.Replace("\r", "");
+                var strs = bufferTextFromFile.Split('\n');
+                if (strs[0].Contains("CountLeveles"))
+                {
+                    int count = Convert.ToInt32(strs[0].Split(':')[1]);
                     if (hangarStages != null)
                     {
                         hangarStages.Clear();
                     }
                     hangarStages = new List<Hangar<ITransport>>(count);
-
                 }
                 else
-                {                
-                    return false;
-                }
-                while (true)
                 {
-                    line = fs.ReadLine();
-                    if (line == null)
-                        break;
-
-                    if (line == "Level")
+                    throw new Exception("Неверный формат файла");
+                }
+                int counter = -1;
+                ITransport plane = null;
+                for (int i = 1; i < strs.Length; ++i)
+                {
+                    if (strs[i] == "Level")
                     {
                         counter++;
-                        hangarStages.Add(new Hangar<ITransport>(countPlaces, pictureWidth, pictureHeight));
+                        hangarStages.Add(new Hangar<ITransport>(countPlaces,
+                        pictureWidth, pictureHeight));
                         continue;
                     }
-                    if (string.IsNullOrEmpty(line))
+                    if (string.IsNullOrEmpty(strs[i]))
                     {
                         continue;
                     }
-                    if (line.Split(':')[1] == "Plane")
+                    if (strs[i].Split(':')[1] == "Plane")
                     {
-                        transport = new Plane(line.Split(':')[2]);
+                        plane = new Plane(strs[i].Split(':')[2]);
                     }
-                    else if (line.Split(':')[1] == "SeaPlane")
+                    else if (strs[i].Split(':')[1] == "SeaPlane")
                     {
-                        transport = new SeaPlane(line.Split(':')[2]);
+                        plane = new SeaPlane(strs[i].Split(':')[2]);
                     }
-                    hangarStages[counter][Convert.ToInt32(line.Split(':')[0])] = transport;
-                }
-                return true;
-            }
+                    hangarStages[counter][Convert.ToInt32(strs[i].Split(':')[0])] = plane;
+                }         
         }
     }
 }
-
