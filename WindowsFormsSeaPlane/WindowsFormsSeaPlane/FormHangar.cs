@@ -55,7 +55,7 @@ namespace WindowsFormsSeaPlane
                 }
                 else
                 {
-                    MessageBox.Show("Машину не удалось поставить");
+                    MessageBox.Show("Самолёт не удалось поставить");
                 }
             }
         }
