@@ -130,8 +130,7 @@ namespace WindowsFormsSeaPlane
                 }
                 hangarStages[counter][counterPlane++] = plane;
             }
-        }
-        
+        } 
         public void Sort()
         {
             hangarStages.Sort();
