@@ -30,7 +30,7 @@ namespace WindowsFormsSeaPlane
                 listBoxLevels.Items.Add("Уровень " + (i + 1));
             }
             listBoxLevels.SelectedIndex = 0;
-        }
+        }      
         private void Draw()
         {
             if (listBoxLevels.SelectedIndex > -1)
@@ -42,7 +42,6 @@ namespace WindowsFormsSeaPlane
                 pictureBoxHangar.Image = bmp;
             }
         }
-
         private void ButtonSetPlane_Click(object sender, EventArgs e)
         {
             form = new FormPlaneConfig();
@@ -62,8 +61,17 @@ namespace WindowsFormsSeaPlane
                 catch (HangarOverflowException ex)
                 {
                     MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Самолёт не удалось поставить");
                 }
                 catch (Exception ex)
+            }
+        }
+        private void ButtonSetSeaPlane_Click(object sender, EventArgs e)
+        {
+            if (listBoxLevels.SelectedIndex > -1)
+            {
+                ColorDialog dialog = new ColorDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
