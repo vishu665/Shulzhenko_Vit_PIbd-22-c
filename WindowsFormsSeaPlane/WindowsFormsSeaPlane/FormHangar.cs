@@ -61,6 +61,7 @@ namespace WindowsFormsSeaPlane
                 catch (HangarOverflowException ex)
                 {
                     MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Самолёт не удалось поставить");
                 }
                 catch (Exception ex)
             }

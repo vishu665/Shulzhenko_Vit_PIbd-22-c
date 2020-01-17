@@ -69,6 +69,10 @@ namespace WindowsFormsSeaPlane
         }
  
         public void LoadData(string filename)
+            return true;
+        }
+  
+        public bool LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
