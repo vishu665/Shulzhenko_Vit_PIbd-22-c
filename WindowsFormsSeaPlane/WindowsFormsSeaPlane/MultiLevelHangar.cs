@@ -41,12 +41,12 @@ namespace WindowsFormsSeaPlane
             {
                 File.Delete(filename);
             }
-            using (FileStream fs = new FileStream(filename, FileMode.Create))
+            using (StreamWriter fs = new StreamWriter(filename, false, System.Text.Encoding.Default))
             {
-                WriteToFile("CountLeveles:" + hangarStages.Count + Environment.NewLine, fs);
+                fs.WriteLine("CountLeveles:" + hangarStages.Count);
                 foreach (var level in hangarStages)
                 {
-                    WriteToFile("Level" + Environment.NewLine, fs);
+                    fs.WriteLine("Level");
                     for (int i = 0; i < countPlaces; i++)
                     {
                         try
@@ -54,24 +54,20 @@ namespace WindowsFormsSeaPlane
                             var plane = level[i];
                             if (plane.GetType().Name == "Plane")
                             {
-                                WriteToFile(i + ":Plane:", fs);
+                                fs.Write(i + ":Plane:");
                             }
-                            if (plane.GetType().Name == "SeaPlane")
+                            if (plane.GetType().Name == "Seaplane")
                             {
-                                WriteToFile(i + ":SeaPlane:", fs);
+                                fs.Write(i + ":Seaplane:");
                             }
-                            WriteToFile(plane + Environment.NewLine, fs);
+                            fs.WriteLine(plane);
                         }
-                        finally { };
+                        finally { }
                     }
                 }
             }
         }
  
-        public void LoadData(string filename)
-            return true;
-        }
-  
         public bool LoadData(string filename)
         {
             if (!File.Exists(filename))
