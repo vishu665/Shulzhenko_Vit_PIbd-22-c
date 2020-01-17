@@ -8,7 +8,7 @@ using WindowsFormsSeaPlane;
 
 namespace WindowsFormsSeaplane
 {
-    public class SeaPlane : Plane
+    public class SeaPlane : Plane, IComparable<SeaPlane>, IEquatable<SeaPlane>
     { 
         public Color DopColor { private set; get; }
         public bool LowerThelegs { private set; get; }
@@ -77,6 +77,75 @@ namespace WindowsFormsSeaplane
         public override string ToString()
         {
             return base.ToString() + ";" + DopColor.Name + ";" + LowerThelegs + ";" + Backwings;
+        }
+        public int CompareTo(SeaPlane other)
+        {
+            var res = (this is Plane).CompareTo(other is Plane);
+            if (res != 0)
+            {
+                return res;
+            }
+            if (DopColor != other.DopColor)
+            {
+                DopColor.Name.CompareTo(other.DopColor.Name);
+            }
+            if (LowerThelegs != other.LowerThelegs)
+            {
+                return LowerThelegs.CompareTo(other.LowerThelegs);
+            }
+            if (Backwings != other.Backwings)
+            {
+                return Backwings.CompareTo(other.Backwings);
+            }
+            return 0;
+        }
+   
+        public bool Equals(SeaPlane other)
+        {
+            var res = (this as Plane).Equals(other as Plane);
+            if (!res)
+            {
+                return res;
+            }
+            if (GetType().Name != other.GetType().Name)
+            {
+                return false;
+            }
+            if (DopColor != other.DopColor)
+            {
+                return false;
+            }
+            if (LowerThelegs != other.LowerThelegs)
+            {
+                return false;
+            }          
+            if (Backwings != other.Backwings)
+            {
+                return false;
+            }
+           
+            return true;
+        }
+   
+        public override bool Equals(Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (!(obj is SeaPlane planeObj))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(planeObj);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

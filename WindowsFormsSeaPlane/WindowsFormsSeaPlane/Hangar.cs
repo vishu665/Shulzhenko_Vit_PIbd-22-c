@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using WindowsFormsSeaplane;
+using System.Collections;
 
 namespace WindowsFormsSeaPlane
 {
-    public class Hangar<T> where T : class, ITransport
+    public class Hangar<T> : IEnumerator<T>, IEnumerable<T>, IComparable<Hangar<T>> where T : class, ITransport
     {
         private Dictionary<int, T> _places;
         private int PictureWidth { get; set; }
@@ -16,6 +17,8 @@ namespace WindowsFormsSeaPlane
         private int _maxCount;
         private const int _placeSizeWidth = 210;
         private const int _placeSizeHeight = 80;
+        private int _currentIndex;
+        internal string GetKey;
 
         public Hangar(int sizes, int pictureWidth, int pictureHeight)
         {
@@ -108,5 +111,91 @@ namespace WindowsFormsSeaPlane
                 }
             }
         }
+        public T Current
+        {
+            get
+            {
+                return _places[_places.Keys.ToList()[_currentIndex]];
+            }
+        }
+
+        object IEnumerator.Current
+        {
+            get
+            {
+                return Current;
+            }
+        }
+
+        public void Dispose()
+        {
+            _places.Clear();
+        }
+       
+            public bool MoveNext()
+        {
+            if (_currentIndex + 1 >= _places.Count)
+            {
+                Reset();
+                return false;
+            }
+            _currentIndex++;
+            return true;
+        }
+       
+        public void Reset()
+        {
+            _currentIndex = -1;
+        }
+      
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
+     
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+      
+        public int CompareTo(Hangar<T> other)
+        {
+            if (_places.Count > other._places.Count)
+            {
+                return -1;
+            }
+            else if (_places.Count < other._places.Count)
+               
+             {
+                return 1;
+            }
+        else if (_places.Count > 0)
+            {
+                var thisKeys = _places.Keys.ToList();
+                var otherKeys = other._places.Keys.ToList();
+                for (int i = 0; i < _places.Count; ++i)
+                {
+                    if (_places[thisKeys[i]] is Plane && other._places[thisKeys[i]] is SeaPlane)
+                    {
+                        return 1;
+                    }
+                    if (_places[thisKeys[i]] is SeaPlane && other._places[thisKeys[i]] is Plane)
+                    {
+                        return -1;
+                    }
+                    if (_places[thisKeys[i]] is Plane && other._places[thisKeys[i]] is Plane)
+                    {
+                        return (_places[thisKeys[i]] is Plane).CompareTo(other._places[thisKeys[i]] is Plane);
+                    }
+                    if (_places[thisKeys[i]] is SeaPlane && other._places[thisKeys[i]]
+                    is SeaPlane)
+                    {
+                        return (_places[thisKeys[i]] is SeaPlane).CompareTo(other._places[thisKeys[i]] is SeaPlane);
+                    }
+                }
+            }
+            return 0;
+        }
     }
-}        
+}
+   

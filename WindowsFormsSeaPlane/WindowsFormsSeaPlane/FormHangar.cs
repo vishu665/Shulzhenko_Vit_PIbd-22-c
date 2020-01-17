@@ -151,5 +151,12 @@ namespace WindowsFormsSeaPlane
                 Draw();
             }
         }
+
+        private void buttonSort_Click(object sender, EventArgs e)
+        {
+            parking.Sort();
+            Draw();
+            logger.Info("Сортировка уровней");
+        }
     }
 }

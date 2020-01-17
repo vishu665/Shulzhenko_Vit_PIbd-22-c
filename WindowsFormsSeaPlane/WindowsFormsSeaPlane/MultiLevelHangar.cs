@@ -11,7 +11,7 @@ namespace WindowsFormsSeaPlane
     class MultiLevelHangar
     {
         List<Hangar<ITransport>> hangarStages;
-        private const int countPlaces = 20;       
+        private const int countPlaces = 20;
         private int pictureWidth;
         private int pictureHeight;
         public MultiLevelHangar(int countStages, int pictureWidth, int pictureHeight)
@@ -21,8 +21,7 @@ namespace WindowsFormsSeaPlane
             this.pictureHeight = pictureHeight;
             for (int i = 0; i < countStages; ++i)
             {
-                hangarStages.Add(new Hangar<ITransport>(countPlaces, pictureWidth,
-               pictureHeight));
+                hangarStages.Add(new Hangar<ITransport>(countPlaces, pictureWidth, pictureHeight));
             }
         }
         public Hangar<ITransport> this[int ind]
@@ -42,89 +41,108 @@ namespace WindowsFormsSeaPlane
             {
                 File.Delete(filename);
             }
-            using (StreamWriter fs = new StreamWriter(filename, false, System.Text.Encoding.Default))
+            using (FileStream fs = new FileStream(filename, FileMode.Create))
             {
-                fs.WriteLine("CountLeveles:" + hangarStages.Count);
+                //Записываем количество уровней
+                WriteToFile("CountLeveles:" + hangarStages.Count +
+               Environment.NewLine, fs);
                 foreach (var level in hangarStages)
                 {
-                    fs.WriteLine("Level");
-                    for (int i = 0; i < countPlaces; i++)
+                    //Начинаем уровень
+                    WriteToFile("Level" + Environment.NewLine, fs);
+                    foreach (ITransport plane in level)
                     {
-                        try
+                        //Записываем тип мшаины
+                        if (plane.GetType().Name == "Plane")
                         {
-                            var plane = level[i];
-                            if (plane.GetType().Name == "Plane")
-                            {
-                                fs.Write(i + ":Plane:");
-                            }
-                            if (plane.GetType().Name == "Seaplane")
-                            {
-                                fs.Write(i + ":Seaplane:");
-                            }
-                            fs.WriteLine(plane);
+                            WriteToFile(level.GetKey + ":Plane:", fs);
                         }
-                        finally { }
+                        if (plane.GetType().Name == "SeaPlane")
+                        {
+                            WriteToFile(level.GetKey + ":SeaPlane:", fs);
+                        }
+                        //Записываемые параметры
+                        WriteToFile(plane + Environment.NewLine, fs);
                     }
                 }
             }
         }
-
+       
+        private void WriteToFile(string text, FileStream stream)
+        {
+            byte[] info = new UTF8Encoding(true).GetBytes(text);
+            stream.Write(info, 0, info.Length);
+        }
         public void LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
                 throw new FileNotFoundException();
             }
-                string bufferTextFromFile = "";
-                using (FileStream fs = new FileStream(filename, FileMode.Open))
+            string bufferTextFromFile = "";
+            using (FileStream fs = new FileStream(filename, FileMode.Open))
+            {
+                byte[] b = new byte[fs.Length];
+                UTF8Encoding temp = new UTF8Encoding(true);
+                while (fs.Read(b, 0, b.Length) > 0)
                 {
-                    byte[] b = new byte[fs.Length];
-                    UTF8Encoding temp = new UTF8Encoding(true);
-                    while (fs.Read(b, 0, b.Length) > 0)            
-                {
-                        bufferTextFromFile += temp.GetString(b);
-                    }
+                    bufferTextFromFile += temp.GetString(b);
                 }
-                bufferTextFromFile = bufferTextFromFile.Replace("\r", "");
-                var strs = bufferTextFromFile.Split('\n');
-                if (strs[0].Contains("CountLeveles"))
+            }
+            bufferTextFromFile = bufferTextFromFile.Replace("\r", "");
+
+            var strs = bufferTextFromFile.Split('\n');
+            if (strs[0].Contains("CountLeveles"))
+            {
+                //считываем количество уровней
+                int count = Convert.ToInt32(strs[0].Split(':')[1]);
+                if (hangarStages != null)
                 {
-                    int count = Convert.ToInt32(strs[0].Split(':')[1]);
-                    if (hangarStages != null)
-                    {
-                        hangarStages.Clear();
-                    }
-                    hangarStages = new List<Hangar<ITransport>>(count);
+                    hangarStages.Clear();
                 }
-                else
+                hangarStages = new List<Hangar<ITransport>>(count);
+            }
+            else
+            {
+                //если нет такой записи, то это не те данные
+                throw new Exception("Неверный формат файла");
+            }
+            int counter = -1;
+            int counterPlane = 0;
+            ITransport plane = null;
+            for (int i = 1; i < strs.Length; ++i)
+            {
+                //идем по считанным записям
+                if (strs[i] == "Level")
                 {
-                    throw new Exception("Неверный формат файла");
+                    //начинаем новый уровень
+                    counter++;
+                    counterPlane = 0;
+                    hangarStages.Add(new Hangar<ITransport>(countPlaces,
+                    pictureWidth, pictureHeight));
+                    continue;
                 }
-                int counter = -1;
-                ITransport plane = null;
-                for (int i = 1; i < strs.Length; ++i)
+                if (string.IsNullOrEmpty(strs[i]))
                 {
-                    if (strs[i] == "Level")
-                    {
-                        counter++;
-                        hangarStages.Add(new Hangar<ITransport>(countPlaces,
-                        pictureWidth, pictureHeight));
-                        continue;
-                    }
-                    if (string.IsNullOrEmpty(strs[i]))
-                    {
-                        continue;
-                    }
-                    if (strs[i].Split(':')[1] == "Plane")
-                    {
-                        plane = new Plane(strs[i].Split(':')[2]);
-                    }
-                    else if (strs[i].Split(':')[1] == "SeaPlane")
-                    {
-                        plane = new SeaPlane(strs[i].Split(':')[2]);
-                    }
-                    hangarStages[counter][Convert.ToInt32(strs[i].Split(':')[0])] = plane;
-                }         
+                    continue;
+                }
+                if (strs[i].Split(':')[1] == "Plane")
+                {
+                    plane = new Plane(strs[i].Split(':')[2]);
+                }
+                else if (strs[i].Split(':')[1] == "SeaPlane")
+                {
+                    plane = new SeaPlane(strs[i].Split(':')[2]);
+                }
+                hangarStages[counter][counterPlane++] = plane;
+            }
+        }
+        /// <summary>
+        /// Сортировка уровней
+        /// </summary>
+        public void Sort()
+        {
+            hangarStages.Sort();
         }
     }
 }
